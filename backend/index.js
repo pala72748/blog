@@ -4,7 +4,7 @@ const cors = require('cors');
 const cookieparser = require('cookie-parser');
 const dotenv = require('dotenv');
 const connectiondb = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoute');
 const categoryRoutes = require('./routes/categoryRoutes');
 const postRoutes = require('./routes/postRoutes');
 //config
