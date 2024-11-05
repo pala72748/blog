@@ -54,7 +54,8 @@ const Home = () => {
             console.log(res.data.msg);
 
         } catch (error) {
-            notifyError(res.data.msg);
+            notifyError(error.res?.data?.msg);
+            console.log(error.res?.data?.msg);
         }
     };
 
