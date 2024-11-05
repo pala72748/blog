@@ -32,7 +32,7 @@ const Home = () => {
         }
     };
 
-    const handleClick = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData();
         Object.entries(user).forEach(([key, value]) => {
@@ -50,11 +50,11 @@ const Home = () => {
                 password: "",
                 image: null,
             });
-            notifySuccess(res.data.msg);
+            notifySuccess(res.data.msg || "Registration successful!");
             console.log(res.data.msg);
 
         } catch (error) {
-            notifyError(error.response?.data?.error);
+            notifyError(error.response?.data?.error || "Failed to register. Please try again.");
         }
     };
 
@@ -63,7 +63,7 @@ const Home = () => {
             <ToastContainer />
             <Header />
             <div className="container mx-auto w-6/12">
-                <form className="flex flex-col gap-4">
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     {inputuser.map((item, index) => (
                         item.type === 'file' ? (
                             <File
@@ -88,14 +88,14 @@ const Home = () => {
                             </div>
                         )
                     ))}
+                    <div className="w-full my-5">
+                        <Button
+                            name="Submit"
+                            type="submit" // This makes it submit the form
+                            className="py-2 px-4 bg-blue-600 text-white"
+                        />
+                    </div>
                 </form>
-                <div className="w-full my-5">
-                    <Button
-                        name="Submit"
-                        onClick={handleClick}
-                        className="py-2 px-4 bg-blue-600 text-white"
-                    />
-                </div>
             </div>
         </>
     );
