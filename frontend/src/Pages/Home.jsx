@@ -39,7 +39,7 @@ const Home = () => {
             data.append(key, value);
         });
         try {
-            const res = await axios.post(`${api}/api/user/register`, data, {
+            const response = await axios.post(`${api}/api/user/register`, data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -50,11 +50,12 @@ const Home = () => {
                 password: "",
                 image: null,
             });
-            notifySuccess(res.data.msg);
-            console.log(res.data.msg);
+            notifySuccess(response.data.msg);
+            console.log(response.data.msg,response.data.user);
 
         } catch (error) {
-            notifyError(error.res.data.msg);
+            notifyError(error.response?.data?.msg);
+            console.log(error.response?.data?.msg);
         }
     };
 
