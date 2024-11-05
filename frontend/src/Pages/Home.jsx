@@ -6,24 +6,20 @@ import axios from 'axios';
 import api from '../api/api';
 import { notifyError, notifySuccess } from '../Components/Layouts/Toast';
 import { ToastContainer } from 'react-toastify';
-import data from '../json/data.json';
+import File from '../Components/Layouts/File';
 
 const Home = () => {
     const inputuser = [
         { name: "username", type: "text", label: "Username", icon: "ph:user", placeholder: "Enter your username" },
         { name: "email", type: "email", label: "Email", icon: "carbon:email", placeholder: "Enter your email" },
-        { name: "phone", type: "tel", label: "Phone number", icon: "ion:call-outline", placeholder: "Enter your phone number" },
-        { name: "address", type: "text", label: "Address", icon: "bx:map", placeholder: "Enter your address" },
-        { name: "message", type: "textarea", label: "Message", icon: "ph:user", placeholder: "Enter your message" },
+        { name: "password", type: "password", label: "Password", icon: "bitcoin-icons:key-outline", placeholder: "Enter your password" },
         { name: "image", type: "file", label: "Upload Image", placeholder: "Upload your image" },
     ];
 
     const [user, setUser] = useState({
         username: "",
         email: "",
-        phone: "",
-        address: "",
-        message: "",
+        password: "",
         image: null,
     });
 
@@ -43,7 +39,7 @@ const Home = () => {
             data.append(key, value);
         });
         try {
-            const res = await axios.post(`${api}/api/createuser`, data, {
+            const res = await axios.post(`${api}/api/user/register`, data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -51,52 +47,32 @@ const Home = () => {
             setUser({
                 username: "",
                 email: "",
-                phone: "",
-                address: "",
-                message: "",
+                password: "",
                 image: null,
             });
             notifySuccess(res.data.msg);
-            console.log(res.data);
-            
+            console.log(res.data.msg);
+
         } catch (error) {
-            notifyError(error.response?.data?.error || "An error occurred. Please try again.");
+            notifyError(error.response?.data?.error);
         }
     };
-
-    const userdata = data.slice(3,5);
 
     return (
         <>
             <ToastContainer />
             <Header />
-            <div>
-                {
-                    userdata.map((item,index)=>{
-                        return (
-                            <span key={index}>
-                                <h1>{item.name}</h1>
-                                <p>{item.description}</p>
-                            </span>
-                        )
-                    })
-                }
-            </div>
             <div className="container mx-auto w-6/12">
-                <form className="grid grid-cols-2 gap-4">
+                <form className="flex flex-col gap-4">
                     {inputuser.map((item, index) => (
-                        item.type === 'textarea' ? (
-                            <div key={index} className="col-span-2">
-                                <label htmlFor={item.name} className="block">{item.label}</label>
-                                <textarea
-                                    name={item.name}
-                                    placeholder={item.placeholder}
-                                    rows={8}
-                                    onChange={handleChange}
-                                    value={user[item.name]}
-                                    className="w-full py-2 outline-none focus:border-blue-600 border bg-zinc-100 rounded-xl ps-6 border-black"
-                                />
-                            </div>
+                        item.type === 'file' ? (
+                            <File
+                                key={index}
+                                name={item.name}
+                                label={item.label}
+                                type={item.type}
+                                onChange={handleChange}
+                            />
                         ) : (
                             <div key={index}>
                                 <Input
@@ -104,7 +80,7 @@ const Home = () => {
                                     label={item.label}
                                     type={item.type}
                                     name={item.name}
-                                    value={item.type !== 'file' ? user[item.name]  : null }
+                                    value={user[item.name]}
                                     onChange={handleChange}
                                     icon={item.icon}
                                     placeholder={item.placeholder}

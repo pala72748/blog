@@ -61,4 +61,13 @@ const logout = async (req, res) => {
     }
 }
 
-module.exports = { register, login, logout };
+const getallusers = async (req, res) => {
+    try {
+        const user = await userModel.find();
+        res.status(200).json({ user, msg: 'user fetch' })
+    } catch (error) {
+        res.status(400).json({ error, msg: 'user fetch failed' })
+    }
+}
+
+module.exports = { register, login, logout, getallusers };
