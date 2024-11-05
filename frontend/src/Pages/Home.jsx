@@ -54,13 +54,8 @@ const Home = () => {
             console.log(response.data.msg,response.data.user);
 
         } catch (error) {
-<<<<<<< HEAD
             notifyError(error.response?.data?.msg);
             console.log(error.response?.data?.msg);
-=======
-            notifyError(error.res?.data?.msg);
-            console.log(error.res?.data?.msg);
->>>>>>> 0d1771559b33962d9c104f2b59cebb4be47ad88e
         }
     };
 
