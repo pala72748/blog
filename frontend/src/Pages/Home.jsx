@@ -50,11 +50,11 @@ const Home = () => {
                 password: "",
                 image: null,
             });
-            notifySuccess(res.data.msg || "Registration successful!");
+            notifySuccess(res.data.msg);
             console.log(res.data.msg);
 
         } catch (error) {
-            notifyError(error.response?.data?.error || "Failed to register. Please try again.");
+            notifyError(error.res?.data?.msg);
         }
     };
 
