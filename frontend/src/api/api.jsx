@@ -1,3 +1,3 @@
-const api = "https://blog-api-abhishek.vercel.app";
+const api = "http://localhost:3000";
 
 export default api;
